@@ -162,87 +162,83 @@ function App() {
 
         
         
-        if (item.title) {
-            const LineHeight = 200;
-            ctx.fillStyle = 'white';
-            ctx.font = 'bold 150px Poppins';
-            currentY += 0; // Añade margen superior
-            wrapText(ctx, item.title, x, currentY, maxWidth, LineHeight);
-            const numLines = textoEnLineas(item.title, maxWidth, ctx.font).length;
-            currentY += LineHeight * numLines + 0; // Añade margen inferior
-        }
-        
+       if (item.title) {
+    const LineHeight = 200;
+    ctx.fillStyle = 'white';
+    ctx.font = 'bold 150px Poppins';
+    currentY += 0; // Añade margen superior
+    wrapText(ctx, item.title, x, currentY, maxWidth, LineHeight);
+    const numLines = textoEnLineas(item.title, maxWidth, ctx.font).length;
+    currentY += LineHeight * numLines + 0; // Añade margen inferior
+}
 
-        if (item.titulotamañomenor) {
-            const LineHeight = 90; // Menor que el de 'title'
-            ctx.fillStyle = 'white';
-            ctx.font = '140px Poppins'; // Tamaño de fuente menor que el de 'title'
-            currentY += 20; // Añade margen superior
-            wrapText(ctx, item.titulotamañomenor, x, currentY, maxWidth, LineHeight);
-            const numLines = textoEnLineas(item.titulotamañomenor, maxWidth, ctx.font).length;
-            currentY += LineHeight * numLines + 20; // Añade margen inferior
-        }
+if (item.titulotamañomenor) {
+    const LineHeight = 90; // Menor que el de 'title'
+    ctx.fillStyle = 'white';
+    ctx.font = '140px Poppins'; // Tamaño de fuente menor que el de 'title'
+    currentY += 40; // Añade margen superior
+    wrapText(ctx, item.titulotamañomenor, x, currentY, maxWidth, LineHeight);
+    const numLines = textoEnLineas(item.titulotamañomenor, maxWidth, ctx.font).length;
+    currentY += LineHeight * numLines + 40; // Añade margen inferior
+}
 
-        if (item.titulolargo) {
-            const LineHeight = 120;
-            ctx.fillStyle = 'white';
-            ctx.font = '65px Poppins';
-            currentY += -20; // Añade margen superior
-            wrapText(ctx, item.titulolargo, x, currentY, maxWidth, LineHeight);
-            const numLines = textoEnLineas(item.titulolargo, maxWidth, ctx.font).length;
-            currentY += LineHeight * numLines + 63; // Añade margen inferior
-        }
-        
-        
-        
-        if (item.frase) {
-            const LineHeight = 140; // Altura de línea específica para la frase
-            ctx.fillStyle = 'white'; // Establece el color del texto
-            ctx.font = 'bold 80px Poppins'; // Peso de fuente ligero y tamaño
-            wrapText(ctx, item.frase, x, currentY, maxWidth, LineHeight); // Dibuja el texto con ajuste automático
-            const numLines = textoEnLineas(item.frase, maxWidth, ctx.font).length; // Calcula el número de líneas
-            currentY += LineHeight * numLines + 20; // Añade un margen adicional después del texto
-        }
-        
+if (item.titulolargo) {
+    const LineHeight = 120;
+    ctx.fillStyle = 'white';
+    ctx.font = '65px Poppins';
+    currentY += -20; // Añade margen superior
+    wrapText(ctx, item.titulolargo, x, currentY, maxWidth, LineHeight);
+    const numLines = textoEnLineas(item.titulolargo, maxWidth, ctx.font).length;
+    currentY += LineHeight * numLines + 20; // Añade margen inferior
+}
 
-        if (item.cortadescripcion) {
-            const LineHeight = 140; // Altura de línea específica para la descripción corta
-            ctx.fillStyle = 'white'; // Establece el color del texto
-            ctx.font = 'bold 70px Poppins'; // Tamaño de fuente más pequeño para la descripción corta
-            wrapText(ctx, item.cortadescripcion, x, currentY, maxWidth, LineHeight); // Dibuja el texto con ajuste automático
-            const numLines = textoEnLineas(item.cortadescripcion, maxWidth, ctx.font).length; // Calcula el número de líneas
-            currentY += LineHeight * numLines + 20; // Añade un margen adicional después del texto
-        }
-        
-    
-     
-        if (item.description) {
-            const LineHeight = 100; // Altura de línea específica para la descripción
-            ctx.fillStyle = 'white'; // Establece el color del texto
-            ctx.font = '55px Poppins'; // Tamaño de fuente para la descripción
-            wrapText(ctx, item.description, x, currentY, maxWidth, LineHeight); // Dibuja el texto con ajuste automático
-            const numLines = textoEnLineas(item.description, maxWidth, ctx.font).length; // Calcula el número de líneas
-            currentY += LineHeight * numLines + 20; // Añade un margen adicional después del texto
-        }
-        
+if (item.frase) {
+    const LineHeight = 140; // Altura de línea específica para la frase
+    ctx.fillStyle = 'white'; // Establece el color del texto
+    ctx.font = 'bold 80px Poppins'; // Peso de fuente ligero y tamaño
+    wrapText(ctx, item.frase, x, currentY, maxWidth, LineHeight); // Dibuja el texto con ajuste automático
+    const numLines = textoEnLineas(item.frase, maxWidth, ctx.font).length; // Calcula el número de líneas
+    currentY += LineHeight * numLines + 40; // Añade un margen adicional después del texto
+}
+
+if (item.cortadescripcion) {
+    const LineHeight = 140; // Altura de línea específica para la descripción corta
+    ctx.fillStyle = 'white'; // Establece el color del texto
+    ctx.font = 'bold 70px Poppins'; // Tamaño de fuente más pequeño para la descripción corta
+    wrapText(ctx, item.cortadescripcion, x, currentY, maxWidth, LineHeight); // Dibuja el texto con ajuste automático
+    const numLines = textoEnLineas(item.cortadescripcion, maxWidth, ctx.font).length; // Calcula el número de líneas
+    currentY += LineHeight * numLines + 40; // Añade un margen adicional después del texto
+}
+
+if (item.description) {
+    const LineHeight = 100; // Altura de línea específica para la descripción
+    ctx.fillStyle = 'white'; // Establece el color del texto
+    ctx.font = '55px Poppins'; // Tamaño de fuente para la descripción
+    wrapText(ctx, item.description, x, currentY, maxWidth, LineHeight); // Dibuja el texto con ajuste automático
+    const numLines = textoEnLineas(item.description, maxWidth, ctx.font).length; // Calcula el número de líneas
+    currentY += LineHeight * numLines + 40; // Añade un margen adicional después del texto
+}
+
+
 
         if (item.caracteristicas) {
             const characteristics = item.caracteristicas.split(',');
-            
-            const maxCharacteristics = 6;
-            characteristics.length = Math.min(characteristics.length, maxCharacteristics);
-            
-            const LineHeight = 100; 
-            ctx.fillStyle = 'white';
-            ctx.font = '600 55px Poppins';
-          
-            let currentLine = currentY;
-          
-            for (let i = 0; i < characteristics.length; i++) {
-                let text;
-                if (align === "left") {
-                    text = `• ${characteristics[i].trim()}`; // Punto a la izquierda para alineación izquierda
-                } else if (align === "right") {
+
+    const maxCharacteristics = 6;
+    characteristics.length = Math.min(characteristics.length, maxCharacteristics);
+
+    const LineHeight = 100;
+    ctx.fillStyle = 'white';
+    ctx.font = '600 55px Poppins';
+
+    let currentLine = currentY;
+
+    for (let i = 0; i < characteristics.length; i++) {
+        let text;
+        if (align === "left") {
+            text = `• ${characteristics[i].trim()}`; // Punto a la izquierda para alineación izquierda
+        } else if (align === "right") {
+            text = `${characteristics[i].trim()} •`; // Punto
                     text = `${characteristics[i].trim()} •`; // Punto a la derecha para alineación derecha
                 } else {
                     text = characteristics[i].trim(); // Sin puntos para alineación central
@@ -256,46 +252,46 @@ function App() {
         }
         
         
-        
-        if (item.boton) {
-            const buttonText = item.boton;
-            ctx.font = 'bold 52px Poppins';
-            const textMetrics = ctx.measureText(buttonText);
-            const textWidth = textMetrics.width;
-            const textHeight = textMetrics.actualBoundingBoxAscent + textMetrics.actualBoundingBoxDescent;
-            
-            // Padding y tamaños adicionales para el botón
-            const buttonPaddingHorizontal = 60;
-            const buttonPaddingVertical = 20;
-            const buttonWidth = textWidth + buttonPaddingHorizontal * 2;
-            const buttonHeight = textHeight + buttonPaddingVertical * 3.5;
-            
-            // Calcular la posición del texto y del botón
-            let textX, buttonX;
-            if (align === "left") {
-                textX = 100 + buttonPaddingHorizontal;
-                buttonX = 100; // Botón alineado a la izquierda
-            } else if (align === "center") {
-                textX = canvas.width / 2;
-                buttonX = textX - buttonWidth / 2; // Centrar el botón en el canvas
-            } else { // align === "right"
-                textX = canvas.width - 100 - buttonPaddingHorizontal;
-                buttonX = canvas.width - 100 - buttonWidth; // Botón alineado a la derecha
-            }
-            
-            const buttonY = currentY;
-            const textY = buttonY + (buttonHeight / 2) + (textMetrics.actualBoundingBoxAscent - textMetrics.actualBoundingBoxDescent) / 2;
-        
-            // Dibujar el botón
-            const gradient = getRandomGradient(ctx, buttonX, buttonY, buttonWidth, buttonHeight);
-            drawRoundedRectangle(ctx, buttonX, buttonY, buttonWidth, buttonHeight, 20, gradient);
-            
-            // Dibujar el texto
-            ctx.fillStyle = 'white';
-            ctx.fillText(buttonText, textX, textY);
-            
-            currentY += buttonHeight + 20; // Añadir margen después del botón
-        }
+      if (item.boton) {
+    const buttonText = item.boton;
+    ctx.font = 'bold 52px Poppins';
+    const textMetrics = ctx.measureText(buttonText);
+    const textWidth = textMetrics.width;
+    const textHeight = textMetrics.actualBoundingBoxAscent + textMetrics.actualBoundingBoxDescent;
+
+    // Padding y tamaños adicionales para el botón
+    const buttonPaddingHorizontal = 60;
+    const buttonPaddingVertical = 20;
+    const buttonWidth = textWidth + buttonPaddingHorizontal * 2;
+    const buttonHeight = textHeight + buttonPaddingVertical * 3.5;
+
+    // Calcular la posición del texto y del botón
+    let textX, buttonX;
+    if (align === "left") {
+        textX = 100 + buttonPaddingHorizontal;
+        buttonX = 100; // Botón alineado a la izquierda
+    } else if (align === "center") {
+        textX = canvas.width / 2;
+        buttonX = textX - buttonWidth / 2; // Centrar el botón en el canvas
+    } else { // align === "right"
+        textX = canvas.width - 100 - buttonPaddingHorizontal;
+        buttonX = canvas.width - 100 - buttonWidth; // Botón alineado a la derecha
+    }
+    
+    const buttonY = currentY;
+    const textY = buttonY + (buttonHeight / 2) + (textMetrics.actualBoundingBoxAscent - textMetrics.actualBoundingBoxDescent) / 2;
+
+    // Dibujar el botón
+    const gradient = getRandomGradient(ctx, buttonX, buttonY, buttonWidth, buttonHeight);
+    drawRoundedRectangle(ctx, buttonX, buttonY, buttonWidth, buttonHeight, 20, gradient);
+
+    // Dibujar el texto
+    ctx.fillStyle = 'white';
+    ctx.fillText(buttonText, textX, textY);
+
+    currentY += buttonHeight + 20; // Añadir margen después del botón
+}
+
         
         
                 
