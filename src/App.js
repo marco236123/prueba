@@ -176,7 +176,7 @@ if (item.titulotamañomenor) {
     const LineHeight = 90; // Menor que el de 'title'
     ctx.fillStyle = 'white';
     ctx.font = '140px Poppins'; // Tamaño de fuente menor que el de 'title'
-    currentY += 40; // Añade margen superior
+    currentY += 20; // Añade margen superior
     wrapText(ctx, item.titulotamañomenor, x, currentY, maxWidth, LineHeight);
     const numLines = textoEnLineas(item.titulotamañomenor, maxWidth, ctx.font).length;
     currentY += LineHeight * numLines + 40; // Añade margen inferior
@@ -186,7 +186,7 @@ if (item.titulolargo) {
     const LineHeight = 120;
     ctx.fillStyle = 'white';
     ctx.font = '65px Poppins';
-    currentY += 40; // Añade margen superior
+    currentY += 20; // Añade margen superior
     wrapText(ctx, item.titulolargo, x, currentY, maxWidth, LineHeight);
     const numLines = textoEnLineas(item.titulolargo, maxWidth, ctx.font).length;
     currentY += LineHeight * numLines + 20; // Añade margen inferior
