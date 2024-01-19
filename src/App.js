@@ -552,26 +552,23 @@ const generateCombinedBackground = () => {
 
 
 const generateAndDownloadImagesCarpeta = async () => {
-  const musicFiles = readMusicFiles();
-  const csvDataCopy = [...csvData]; // Crear una copia de csvData
-
-  for (let index = 0; index < csvDataCopy.length; index++) {
-    await drawDefaultContent(); // Esperar a que se complete el dibujo del contenido por defecto
-    drawCsvDataOnCanvas(csvDataCopy, index); // Dibujar los datos del CSV
-    await new Promise((resolve) => {
-      setTimeout(() => {
-        const canvas = canvasRef.current;
-        canvas.toBlob((blob) => {
-          const imageFile = new File([blob], `image_${index}.png`, { type: 'image/png' });
-          saveImageFile(imageFile); // Guardar la imagen en la carpeta "images"
-          resolve();
-        });
-      }, 0);
-    });
-  }
-
-  await generateAllVideos(musicFiles); // Generar los videos con las imágenes de la carpeta "images"
-};
+const zip = new JSZip();
+// Solo iterar hasta la penúltima fila del CSV
+for (let index = 0; index < csvData.length - 1; index++) {
+await drawDefaultContent(); // Esperar a que se complete el dibujo del contenido por defecto
+drawCsvDataOnCanvas(csvData, index); // Dibujar los datos del CSV
+await new Promise((resolve) => {
+setTimeout(() => {
+const canvas = canvasRef.current;
+// Crear imagen y guardarla en la carpeta "images"
+const imageName = images/image_${index}.png;
+canvas.toBlob(blob => {
+zip.file(imageName, blob);
+resolve();
+});
+}, 0);
+});
+}
 
 const generateAllVideos = async (musicFiles) => {
   const imagesFolder = './images';
