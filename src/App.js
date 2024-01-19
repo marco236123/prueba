@@ -570,6 +570,12 @@ resolve();
 });
 }
 
+zip.generateAsync({ type: "blob" }).then(content => {
+saveAs(content, "images.zip");
+});
+};
+    
+
 const generateAllVideos = async (musicFiles) => {
   const imagesFolder = './images';
   const videosFolder = './videos';
