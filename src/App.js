@@ -4,6 +4,8 @@ import './App.css';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 import logo from './logo.png'; // Import your logo
+const imagesFolder = './images'; 
+const musicFolder = './music';
 
 function App() {
     const canvasRef = useRef(null);
@@ -542,6 +544,77 @@ const generateCombinedBackground = () => {
     });
 };
 
+
+
+
+
+    
+
+
+const generateAndDownloadImagesCarpeta = async () => {
+  const musicFiles = readMusicFiles();
+
+  for (let index = 0; index < csvData.length - 1; index++) {
+    await drawDefaultContent(); // Esperar a que se complete el dibujo del contenido por defecto
+    drawCsvDataOnCanvas(csvData, index); // Dibujar los datos del CSV
+    await new Promise((resolve) => {
+      setTimeout(() => {
+        const canvas = canvasRef.current;
+        canvas.toBlob((blob) => {
+          const imageFile = new File([blob], `image_${index}.png`, { type: 'image/png' });
+          saveImageFile(imageFile); // Guardar la imagen en la carpeta "images"
+          resolve();
+        });
+      }, 0);
+    });
+  }
+
+  await generateAllVideos(musicFiles); // Generar los videos con las imágenes de la carpeta "images"
+};
+
+const generateAllVideos = async (musicFiles) => {
+  const imagesFolder = './images';
+  const videosFolder = './videos';
+
+  const imageFiles = fs.readdirSync(imagesFolder);
+
+  const zip = new JSZip();
+
+  for (const imageFile of imageFiles) {
+    const imageFilePath = `${imagesFolder}/${imageFile}`;
+    const videoName = imageFile.replace('.png', '.mp4');
+    const musicFile = musicFiles[Math.floor(Math.random() * musicFiles.length)];
+    const videoFilePath = `${videosFolder}/${videoName}`;
+
+    await generateVideo(imageFilePath, musicFile, videoFilePath);
+
+    zip.file(videoName, fs.readFileSync(videoFilePath));
+  }
+
+  const zipContent = await zip.generateAsync({ type: 'nodebuffer' });
+  fs.writeFileSync('videos.zip', zipContent);
+};
+
+const generateVideo = async (imageFilePath, musicFile, videoFilePath) => {
+  const video = new Video();
+
+  video.addAudio(`${musicFolder}/${musicFile}`);
+  video.duration(30);
+  video.addImage(imageFilePath);
+
+  await video.render();
+  await fs.promises.rename(video.path, videoFilePath);
+};
+
+const readMusicFiles = () => {
+  const musicFiles = fs.readdirSync(musicFolder);
+  return musicFiles;
+};
+
+
+
+    
+    
   return (
       <div>
         <div className="rooot">
@@ -551,7 +624,7 @@ const generateCombinedBackground = () => {
           <div className="button-container">
       <div className="top-buttons">
       <button onClick={generateAndDownloadImages}>Descargar</button>
-      <button >Generar Videos</button>
+     <button onClick={generateAndDownloadImagesCarpeta}>Generar Videos</button>
         <button onClick={() => generateCombinedBackground(canvasRef.current.getContext('2d'))}>Fondo Combinado</button>
       </div>
       <div className="bottom-button">
