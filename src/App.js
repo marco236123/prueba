@@ -551,30 +551,24 @@ const generateCombinedBackground = () => {
     
 
 
-const generateAndDownloadImagesCarpeta = async () => {
-const zip = new JSZip();
-// Solo iterar hasta la penúltima fila del CSV
-for (let index = 0; index < csvData.length - 1; index++) {
+
+    const generateAndDownloadImagesCarpeta = async () => {
+for (let index = 0; index < csvData.length-1; index++) {
 await drawDefaultContent(); // Esperar a que se complete el dibujo del contenido por defecto
 drawCsvDataOnCanvas(csvData, index); // Dibujar los datos del CSV
 await new Promise((resolve) => {
 setTimeout(() => {
 const canvas = canvasRef.current;
-// Crear imagen y guardarla en la carpeta "images"
 const imageName = images/image_${index}.png;
 canvas.toBlob(blob => {
-zip.file(imageName, blob);
+// Guardar la imagen en la carpeta images
+saveAs(blob, imageName);
 resolve();
 });
 }, 0);
 });
 }
-
-zip.generateAsync({ type: "blob" }).then(content => {
-saveAs(content, "images.zip");
-});
 };
-    
 
 const generateAllVideos = async (musicFiles) => {
   const imagesFolder = './images';
