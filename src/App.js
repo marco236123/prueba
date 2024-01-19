@@ -617,7 +617,7 @@ const generateCombinedBackground = () => {
       <div className="top-buttons">
       <button onClick={generateAndDownloadImages}>Descargar</button>
    <input type="file" id="fileInput" accept=".zip" hidden />
-<button onclick="processZipFile()">Generar Videos</button>
+<button onclick="processZipFile()">Generar Videoss</button>
         <button onClick={() => generateCombinedBackground(canvasRef.current.getContext('2d'))}>Fondo Combinado</button>
       </div>
       <div className="bottom-button">
