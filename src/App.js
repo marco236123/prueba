@@ -548,66 +548,60 @@ const generateCombinedBackground = () => {
 
 
 
-    
-
-
-
-    const generateAndDownloadImagesCarpeta = async () => {
-for (let index = 0; index < csvData.length-1; index++) {
-await drawDefaultContent(); // Esperar a que se complete el dibujo del contenido por defecto
-drawCsvDataOnCanvas(csvData, index); // Dibujar los datos del CSV
-await new Promise((resolve) => {
-setTimeout(() => {
-const canvas = canvasRef.current;
-const imageName = images/image_${index}.png;
-canvas.toBlob(blob => {
-// Guardar la imagen en la carpeta images
-saveAs(blob, imageName);
-resolve();
-});
-}, 0);
-});
-}
+    const processZipFile = () => {
+  const input = document.getElementById('fileInput');
+  input.click();
+  input.onchange = batchProcessImagesAndGenerateVideos;
 };
 
-const generateAllVideos = async (musicFiles) => {
-  const imagesFolder = './images';
-  const videosFolder = './videos';
-
-  const imageFiles = fs.readdirSync(imagesFolder);
-
+    const loadZipFile = (zipFile) => {
   const zip = new JSZip();
-
-  for (const imageFile of imageFiles) {
-    const imageFilePath = `${imagesFolder}/${imageFile}`;
-    const videoName = imageFile.replace('.png', '.mp4');
-    const musicFile = musicFiles[Math.floor(Math.random() * musicFiles.length)];
-    const videoFilePath = `${videosFolder}/${videoName}`;
-
-    await generateVideo(imageFilePath, musicFile, videoFilePath);
-
-    zip.file(videoName, fs.readFileSync(videoFilePath));
-  }
-
-  const zipContent = await zip.generateAsync({ type: 'nodebuffer' });
-  fs.writeFileSync('videos.zip', zipContent);
+  const reader = new FileReader();
+  reader.readAsArrayBuffer(zipFile);
+  reader.onload = (event) => {
+    const arrayBuffer = event.target.result;
+    zip.load(arrayBuffer).then(() => {
+      zip.forEach((relativePath, file) => {
+        if (file.dir) return;
+        if (relativePath.endsWith('.png')) {
+          const imageFile = file;
+          // Agrega aquí el código para procesar las imágenes
+        }
+      });
+    });
+  };
 };
 
-const generateVideo = async (imageFilePath, musicFile, videoFilePath) => {
-  const video = new Video();
-
-  video.addAudio(`${musicFolder}/${musicFile}`);
-  video.duration(30);
-  video.addImage(imageFilePath);
-
-  await video.render();
-  await fs.promises.rename(video.path, videoFilePath);
+    const batchProcessImagesAndGenerateVideos = () => {
+  const imageFiles = [];
+  const zip = new JSZip();
+  const reader = new FileReader();
+  const zipFile = document.getElementById('fileInput').files[0];
+  reader.readAsArrayBuffer(zipFile);
+  reader.onload = (event) => {
+    const arrayBuffer = event.target.result;
+    zip.load(arrayBuffer).then(() => {
+      zip.forEach((relativePath, file) => {
+        if (file.dir) return;
+        if (relativePath.endsWith('.png')) {
+          const imageFile = file;
+          imageFiles.push(imageFile);
+        }
+      });
+      for (let i = 0; i < imageFiles.length; i += 10) {
+        const batchImages = imageFiles.slice(i, i + 10);
+        // Aquí puedes usar el código que ya tienes para procesar
+        // las imágenes por lotes de 10 y generar los videos.
+        // Luego, agregar los videos al objeto JSZip para guardarlos.
+      }
+      zip.generateAsync({ type: "blob" }).then((content) => {
+        saveAs(content, "videos.zip");
+      });
+    });
+  };
 };
 
-const readMusicFiles = () => {
-  const musicFiles = fs.readdirSync(musicFolder);
-  return musicFiles;
-};
+   
 
 
 
@@ -622,7 +616,8 @@ const readMusicFiles = () => {
           <div className="button-container">
       <div className="top-buttons">
       <button onClick={generateAndDownloadImages}>Descargar</button>
-     <button onClick={generateAndDownloadImagesCarpeta}>Generar Videos</button>
+   <input type="file" id="fileInput" accept=".zip" hidden />
+<button onclick="processZipFile()">Generar Videos</button>
         <button onClick={() => generateCombinedBackground(canvasRef.current.getContext('2d'))}>Fondo Combinado</button>
       </div>
       <div className="bottom-button">
