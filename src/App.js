@@ -546,63 +546,47 @@ const generateCombinedBackground = () => {
 
 
 
-
-
-    const processZipFile = () => {
-  const input = document.getElementById('fileInput');
+    const handleZipUpload = (e) => {
+  const input = document.getElementById('zip-file-input');
   input.click();
-  input.onchange = batchProcessImagesAndGenerateVideos;
 };
 
-    const loadZipFile = (zipFile) => {
-  const zip = new JSZip();
-  const reader = new FileReader();
-  reader.readAsArrayBuffer(zipFile);
-  reader.onload = (event) => {
-    const arrayBuffer = event.target.result;
-    zip.load(arrayBuffer).then(() => {
-      zip.forEach((relativePath, file) => {
-        if (file.dir) return;
-        if (relativePath.endsWith('.png')) {
-          const imageFile = file;
-          // Agrega aquí el código para procesar las imágenes
-        }
+  const loadZipFile = (zipFile) => {
+    const zip = new JSZip();
+    const reader = new FileReader();
+    reader.readAsArrayBuffer(zipFile).then(() => {
+      const zipEntries = new Uint8Array(zipFile);
+      zip.loadAsync(zipEntries).then(() => {
+        zip.forEach((relativePath, file) => {
+          if (file.dir) return;
+          if (relativePath.endsWith('.png')) {
+            const imageFile = file;
+            // Agregar aquí el código para procesar la imagen
+          }
+        });
       });
     });
   };
-};
 
-    const batchProcessImagesAndGenerateVideos = () => {
-  const imageFiles = [];
-  const zip = new JSZip();
-  const reader = new FileReader();
-  const zipFile = document.getElementById('fileInput').files[0];
-  reader.readAsArrayBuffer(zipFile);
-  reader.onload = (event) => {
-    const arrayBuffer = event.target.result;
-    zip.load(arrayBuffer).then(() => {
-      zip.forEach((relativePath, file) => {
-        if (file.dir) return;
-        if (relativePath.endsWith('.png')) {
-          const imageFile = file;
-          imageFiles.push(imageFile);
-        }
-      });
-      for (let i = 0; i < imageFiles.length; i += 10) {
-        const batchImages = imageFiles.slice(i, i + 10);
-        // Aquí puedes usar el código que ya tienes para procesar
-        // las imágenes por lotes de 10 y generar los videos.
-        // Luego, agregar los videos al objeto JSZip para guardarlos.
+  const processImages = () => {
+    // Aquí puedes agregar el código para procesar las imágenes
+    // y generar los videos.
+  };
+
+  const handleZipUpload = (e) => {
+    const input = document.getElementById('zip-file-input');
+    input.click();
+    const handleFile = (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        loadZipFile(file);
       }
-      zip.generateAsync({ type: "blob" }).then((content) => {
-        saveAs(content, "videos.zip");
-      });
+    };
+    input.addEventListener('change', handleFile);
+    e.target.addEventListener('change', () => {
+      input.removeEventListener('change', handleFile);
     });
   };
-};
-
-   
-
 
 
     
@@ -616,8 +600,16 @@ const generateCombinedBackground = () => {
           <div className="button-container">
       <div className="top-buttons">
       <button onClick={generateAndDownloadImages}>Descargar</button>
-   <input type="file" id="fileInput" accept=".zip" hidden />
-<button onclick="processZipFile()">Generar Videoss</button>
+<div className="bottom-button">
+  <button onClick={handleZipUpload}>Generar Vídeos</button>
+  <input
+    type="file"
+    accept=".zip"
+    id="zip-file-input"
+    style={{display: 'none'}}
+    onChange={handleZipUpload}
+  />
+</div>
         <button onClick={() => generateCombinedBackground(canvasRef.current.getContext('2d'))}>Fondo Combinado</button>
       </div>
       <div className="bottom-button">
