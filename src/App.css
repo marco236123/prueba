@@ -171,3 +171,11 @@ button, .bottom-button{
     margin-bottom: 10px;
   }
 }
+
+
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('/Poppins-Regular.ttf') format('truetype');
+  font-weight: bold;
+}
