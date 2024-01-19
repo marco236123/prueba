@@ -179,3 +179,8 @@ button, .bottom-button{
   src: url('./Poppins-Regular.ttf') format('truetype');
   font-weight: bold;
 }
+
+
+#fileInput {
+  display: none;
+}
