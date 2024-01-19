@@ -553,10 +553,11 @@ const generateCombinedBackground = () => {
 
 const generateAndDownloadImagesCarpeta = async () => {
   const musicFiles = readMusicFiles();
+  const csvDataCopy = [...csvData]; // Crear una copia de csvData
 
-  for (let index = 0; index < csvData.length - 1; index++) {
+  for (let index = 0; index < csvDataCopy.length; index++) {
     await drawDefaultContent(); // Esperar a que se complete el dibujo del contenido por defecto
-    drawCsvDataOnCanvas(csvData, index); // Dibujar los datos del CSV
+    drawCsvDataOnCanvas(csvDataCopy, index); // Dibujar los datos del CSV
     await new Promise((resolve) => {
       setTimeout(() => {
         const canvas = canvasRef.current;
